@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title></title>
+</head>
+
+<body>
+
+<div class="container">
+
+
+
+    <h3>Danh sách nhân viên</h3>
+    <hr>
+
+    <!-- add button-->
+    <a th:href="@{/employees/showFormForAdd}"
+       class = "btn btn-primary btn-sm mb-3"
+       sec:authorize="hasRole('ADMIN')">
+        Thêm nhân viên
+    </a>
+
+    <!-- display user name and role -->
+    <p>
+        User: <span sec:authentication="principal.username"></span>
+        <br><br>
+        Role:<span sec:authentication="principal.authorities"></span>
+    </p>
+
+    <!-- add a logout button -->
+    <form action="#" th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout"/>
+    </form>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-green">
+        <tr>
+            <th>Họ và tên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Số điện thoại</th>
+            <th>Email</th>
+            <th>Địa chỉ</th>
+            <th>Phòng ban</th>
+            <th>Chức vụ</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempEmployee : ${employees}">
+
+            <td th:text="${tempEmployee.hoTen}" />
+            <td th:text="${tempEmployee.ngaySinh}" />
+            <td th:text="${tempEmployee.gioiTinh}" />
+            <td th:text="${tempEmployee.soDienThoai}" />
+            <td th:text="${tempEmployee.email}" />
+            <td th:text="${tempEmployee.diaChi}" />
+            <td th:text="${tempEmployee.department.tenPB}" />
+            <td th:text="${tempEmployee.position.tenCV}" />
+
+            <td>
+                <a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
+                   class="btn btn-info btn-sm"
+                   sec:authorize="hasRole('ADMIN')">
+                    Update
+                </a>
+
+                <a  th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
+                    class="btn btn-danger btn-sm"
+                    onclick="if (!(confirm('Xoa nhan vien nay?'))) return false"
+                    sec:authorize="hasRole('ADMIN')">
+                    Delete
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
+
+
+

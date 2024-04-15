@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Cập nhật thông tin nhân viên</title>
+</head>
+<body>
+<div class="container">
+
+    <h3>Update Employee</h3>
+    <hr>
+
+    <form action="#" th:action="@{/employees/save}"
+          th:object="${employee}" method="POST">
+        <input type="hidden" th:field="*{id}">
+
+        <input type="text" th:field="*{hoTen}"
+               class="form-control mb-4 w-25" placeholder="Họ và tên">
+        <input type="text" th:field="*{ngaySinh}"
+               class="form-control mb-4 w-25" placeholder="Ngày sinh">
+        <select th:field="*{gioiTinh}" class="form-select mb-4 w-25">
+            <option value="Nam">Nam</option>
+            <option value="Nu">Nữ</option>
+            <option value="Khac">Khác</option>
+        </select>
+        <input type="text" th:field="*{soDienThoai}"
+               class="form-control mb-4 w-25" placeholder="Số Điện Thoại">
+        <input type="text" th:field="*{email}"
+               class="form-control mb-4 w-25" placeholder="Email">
+        <input type="text" th:field="*{diaChi}"
+               class="form-control mb-4 w-25" placeholder="Địa Chỉ">
+        <select th:name="department" class="form-select mb-4 w-25">
+            <option th:each="department : ${departments}"
+                    th:value="${department.maPB}"
+                    th:text="${department.tenPB}"
+                    th:selected="${department.maPB == employee.department.maPB}">
+            </option>
+        </select>
+
+        <select th:name="position" class="form-select mb-4 w-25">
+            <option th:each="position : ${positions}"
+                    th:value="${position.maCv}"
+                    th:text="${position.tenCV}"
+                    th:selected="${position.maCv == employee.position.maCv}">
+            </option>
+        </select>
+
+        <button type="submit" class="btn btn-info col-3">Update</button>
+    </form>
+
+    <hr>
+    <a th:href="@{/employees/list}">Back to List</a>
+</div>
+
+</body>
+</html>
