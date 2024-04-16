@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- boostrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Chỉnh sửa phòng ban</title>
+
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class = "container">
+
+    <h3>Thêm phòng ban</h3>
+    <hr>
+    <form action="#" th:action="@{/departments/save}"
+          th:object="${department}" method="POST">
+        <input type = "hidden" th:field = "*{maPB}">
+          Tên phòng ban
+        <input type ="text" th:field = "*{tenPB}"
+               class="form-control mb-4 w-50">
+          Mô tả
+        <textarea th:field = "*{moTa}"
+               class="form-control mb-4 w-50">
+        </textarea>
+
+
+        <button type = "submit" class="btn btn-info col-3">Lưu</button>
+    </form>
+
+    <hr>
+    <a th:href = "@{/departments/list}">Quay lại</a>
+</div>
+
+</body>
+</html>

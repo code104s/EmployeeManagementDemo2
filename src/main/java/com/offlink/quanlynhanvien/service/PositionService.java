@@ -14,4 +14,6 @@ public interface PositionService {
     void save(Position thePosition);
 
     void deletedPositionById(long theId);
+
+    List<Position> searchPosition(String keyword);
 }

@@ -1,6 +1,9 @@
 package com.offlink.quanlynhanvien.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
@@ -17,6 +20,8 @@ public class Employee {
     @Column(name = "MaNV")
     private long id;
 
+    @NotEmpty(message = "Họ tên không được để trống")
+    @Size(min=5, max=50, message = "Họ tên phải từ 5 đến 50 ký tự")
     @Column(name = "Hoten")
     private String hoTen;
 
@@ -27,6 +32,8 @@ public class Employee {
     @Column(name = "Gioitinh")
     private Gender gioiTinh;
 
+    @NotEmpty(message = "Số điện thoại không được để trống")
+    @Size(min=10, max=11, message = "Số điện thoại phải từ 10 đến 11 ký tự")
     @Column(name = "Sodienthoai")
     private String soDienThoai;
 

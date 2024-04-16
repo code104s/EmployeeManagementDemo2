@@ -18,7 +18,7 @@
 
 
 
-    <h3>Danh sách nhân viên</h3>
+    <h3>Danh sách phòng ban</h3>
     <hr>
 
     <!-- display user name and role -->
@@ -29,30 +29,18 @@
     </p>
 
     <!-- add a logout button -->
-    <form action="#" th:action="@{/logout}" method="POST">
+    <!--<form action="#" th:action="@{/logout}" method="POST">
         <input type="submit" value="Logout"/>
         <hr>
-    </form>
-
-    <!-- add button-->
-    <a th:href="@{/employees/showFormForAdd}"
+    </form>-->
+    <hr>
+    <a th:href="@{/departments/showFormForAdd}"
        class = "btn btn-primary btn-sm mb-3"
        sec:authorize="hasRole('ADMIN')">
-        Thêm nhân viên
+        Thêm phòng ban
     </a>
 
-    <a th:href="@{/departments/list}"
-       class = "btn btn-primary btn-sm mb-3"
-       sec:authorize="hasRole('ADMIN')">
-        PB
-    </a>
-    <a th:href="@{/positions/list}"
-       class = "btn btn-primary btn-sm mb-3"
-       sec:authorize="hasRole('ADMIN')">
-        CV
-    </a>
-
-    <form action="#" th:action="@{/employees/search}" method="GET">
+    <form action="#" th:action="@{/departments/search}" method="GET">
         <input type="text" name="keyword" placeholder="Tìm kiếm">
         <button type="submit">Tìm kiếm</button>
     </form>
@@ -60,42 +48,28 @@
     <table class="table table-bordered table-striped">
         <thead class="table table-hover table-success">
         <tr>
-            <th>ID</th>
-            <th>Họ và tên</th>
-            <th>Ngày sinh</th>
-            <th>Giới tính</th>
-            <th>Số điện thoại</th>
-            <th>Email</th>
-            <th>Địa chỉ</th>
-            <th>Phòng ban</th>
-            <th>Chức vụ</th>
+            <th>Tên phòng ban</th>
+            <th>Mô tả</th>
             <th>Action</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="tempEmployee : ${employees}">
+        <tr th:each="tempDepartment : ${departments}">
 
-            <td th:text="${tempEmployee.id}" />
-            <td th:text="${tempEmployee.hoTen}" />
-            <td th:text="${tempEmployee.ngaySinh}" />
-            <td th:text="${tempEmployee.gioiTinh}" />
-            <td th:text="${tempEmployee.soDienThoai}" />
-            <td th:text="${tempEmployee.email}" />
-            <td th:text="${tempEmployee.diaChi}" />
-            <td th:text="${tempEmployee.department.tenPB}" />
-            <td th:text="${tempEmployee.position.tenCV}" />
+            <td th:text="${tempDepartment.tenPB}" />
+            <td th:text="${tempDepartment.moTa}" />
 
             <td>
-                <a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
+                <a th:href="@{/departments/showFormForUpdate(departmentId=${tempDepartment.maPB})}"
                    class="btn btn-info btn-sm"
                    sec:authorize="hasRole('ADMIN')">
                     Update
                 </a>
 
-                <a  th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
+                <a  th:href="@{/departments/delete(departmentId=${tempDepartment.maPB})}"
                     class="btn btn-danger btn-sm"
-                    onclick="if (!(confirm('Xoa nhan vien nay?'))) return false"
+                    onclick="if (!(confirm('Xoa phong ban nay?'))) return false"
                     sec:authorize="hasRole('ADMIN')">
                     Delete
                 </a>
@@ -104,7 +78,7 @@
         </tr>
         </tbody>
     </table>
-
+    <a th:href = "@{/employees/list}">Quay lại</a>
 </div>
 
 </body>

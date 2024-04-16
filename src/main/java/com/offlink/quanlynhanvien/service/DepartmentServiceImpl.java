@@ -2,6 +2,7 @@ package com.offlink.quanlynhanvien.service;
 
 import com.offlink.quanlynhanvien.DAO.DepartmentRepository;
 import com.offlink.quanlynhanvien.entity.Department;
+import com.offlink.quanlynhanvien.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,4 +42,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void deletedDepartmentById(long theId) {
         departmentRepository.deleteById(theId);
     }
+
+    @Override
+    public List<Department> searchDepartment(String keyword) {
+        return departmentRepository.searchDepartment(keyword);
+    }
+
 }

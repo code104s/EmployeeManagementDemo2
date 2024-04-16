@@ -43,4 +43,9 @@ public class PositionServiceImpl implements PositionService{
     public void deletedPositionById(long theId) {
         positionRepository.deleteById(theId);
     }
+
+    @Override
+    public List<Position> searchPosition(String keyword) {
+        return positionRepository.searchPosition(keyword);
+    }
 }

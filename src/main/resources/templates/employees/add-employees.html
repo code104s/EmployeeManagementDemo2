@@ -6,42 +6,56 @@
 
     <!-- boostrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Thêm nhân viên</title>
 
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <div class = "container">
 
-    <h3>Danh sách nhân viên</h3>
+    <h3>Tạo nhân viên mới</h3>
     <hr>
-
-    <p class = "h4 mb-4"> Tạo nhân viên mới </p>
     <form action="#" th:action="@{/employees/save}"
           th:object="${employee}" method="POST">
         <input type = "hidden" th:field = "*{id}">
 
-
+        Họ và tên:
         <input type = "text" th:field = "*{hoTen}"
-               class="form-control mb-4 w-25" placeholder="Họ và tên">
+               class="form-control mb-4 w-25">
+        <!--<ul>
+            <li th:each="error : ${#fields.errors('hoTen')}"
+                class="error" th:text="${error}">Error</li>
+        </ul>-->
+        Ngày sinh:
         <input type="text" th:field = "*{ngaySinh}"
-               class="form-control mb-4 w-25" placeholder="Ngày sinh">
+               class="form-control mb-4 w-25">
+        Giới tính:
         <select th:field="*{gioiTinh}" class="form-select mb-4 w-25">
             <option value="Nam">Nam</option>
             <option value="Nu">Nữ</option>
             <option value="Khac">Khác</option>
         </select>
+        Số điện thoại:
         <input type="text" th:field="*{soDienThoai}"
-               class="form-control mb-4 w-25" placeholder="Số Điện Thoại">
+               class="form-control mb-4 w-25">
+        Email:
         <input type="text" th:field="*{email}"
-               class="form-control mb-4 w-25" placeholder="Email">
+               class="form-control mb-4 w-25">
+        Địa Chỉ:
         <input type="text" th:field="*{diaChi}"
-               class="form-control mb-4 w-25" placeholder="Địa Chỉ">
+               class="form-control mb-4 w-25" >
+        Phòng ban:
         <select th:field ="*{department}" class="form-select mb-4 w-25">
             <option th:each="department : ${departments}"
                     th:value="${department.maPB}"
                     th:text="${department.tenPB}">
             </option>
         </select>
-
+        Chức vụ:
         <select th:field="*{position}" class="form-select mb-4 w-25">
             <option th:each="position : ${positions}"
                     th:value="${position.maCv}"

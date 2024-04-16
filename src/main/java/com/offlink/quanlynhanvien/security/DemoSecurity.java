@@ -10,6 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class DemoSecurity {
+
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
         UserDetails twan = User.withDefaultPasswordEncoder()
@@ -28,7 +29,7 @@ public class DemoSecurity {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception {
         http.exceptionHandling(configurer ->
                         configurer
                                 .accessDeniedPage("/accessDenied")
@@ -43,8 +44,8 @@ public class DemoSecurity {
                                 .loginProcessingUrl("/authenticateTheUser")
                                 .permitAll()
                 )
-                .logout(logout->logout.permitAll()
+                .logout(logout -> logout.permitAll()
                 );
-        return  http.build();
+        return http.build();
     }
 }

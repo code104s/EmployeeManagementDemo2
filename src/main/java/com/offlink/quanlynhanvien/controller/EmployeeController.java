@@ -39,7 +39,7 @@ public class EmployeeController {
 
     // mapping
     @GetMapping("/list")
-    public String listEmployee(Model theModel) {
+    public String listEmployee(Model theModel, @RequestParam(required = false) String keyword) {
 
         // get the employee form database
         List<Employee> theEmployee = employeeService.findAll();
@@ -125,4 +125,17 @@ public class EmployeeController {
         // redirect to the
         return "redirect:/employees/list";
     }
+
+    @GetMapping("/search")
+    public String search(@RequestParam("keyword") String keyword, Model theModel) {
+        // search employee from the service
+        List<Employee> theEmployee = employeeService.search(keyword);
+
+        // add to the spring model
+        theModel.addAttribute("employees", theEmployee);
+
+        return "employees/list-employee";
+    }
+
+
 }

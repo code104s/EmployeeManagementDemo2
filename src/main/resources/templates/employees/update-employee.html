@@ -12,28 +12,35 @@
 <body>
 <div class="container">
 
-    <h3>Update Employee</h3>
+    <h3>Cập nhật thông tin nhân viên</h3>
     <hr>
 
     <form action="#" th:action="@{/employees/save}"
           th:object="${employee}" method="POST">
         <input type="hidden" th:field="*{id}">
 
+        Họ và tên:
         <input type="text" th:field="*{hoTen}"
-               class="form-control mb-4 w-25" placeholder="Họ và tên">
+               class="form-control mb-4 w-25">
+        Ngày sinh:
         <input type="text" th:field="*{ngaySinh}"
-               class="form-control mb-4 w-25" placeholder="Ngày sinh">
+               class="form-control mb-4 w-25">
+        Giới tính:
         <select th:field="*{gioiTinh}" class="form-select mb-4 w-25">
             <option value="Nam">Nam</option>
             <option value="Nu">Nữ</option>
             <option value="Khac">Khác</option>
         </select>
+        Số điện thoại:
         <input type="text" th:field="*{soDienThoai}"
-               class="form-control mb-4 w-25" placeholder="Số Điện Thoại">
+               class="form-control mb-4 w-25">
+        Email:
         <input type="text" th:field="*{email}"
-               class="form-control mb-4 w-25" placeholder="Email">
+               class="form-control mb-4 w-25">
+        Địa chỉ:
         <input type="text" th:field="*{diaChi}"
-               class="form-control mb-4 w-25" placeholder="Địa Chỉ">
+               class="form-control mb-4 w-25">
+        Phòng ban:
         <select th:name="department" class="form-select mb-4 w-25">
             <option th:each="department : ${departments}"
                     th:value="${department.maPB}"
@@ -41,7 +48,7 @@
                     th:selected="${department.maPB == employee.department.maPB}">
             </option>
         </select>
-
+        Chức vụ
         <select th:name="position" class="form-select mb-4 w-25">
             <option th:each="position : ${positions}"
                     th:value="${position.maCv}"
@@ -54,7 +61,7 @@
     </form>
 
     <hr>
-    <a th:href="@{/employees/list}">Back to List</a>
+    <a th:href="@{/employees/list}">Quay lại</a>
 </div>
 
 </body>
