@@ -15,5 +15,7 @@ public interface EmployeeService {
 
     List<Employee> search(String keyword);
 
+    List<Employee> findEmployeeNotInSalaryOfMonth(int thang, int nam);
+
 
 }

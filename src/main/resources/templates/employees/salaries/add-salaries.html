@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- boostrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Chỉnh sửa</title>
+</head>
+<body>
+<div class = "container">
+
+    <h3>Thêm d/s lương</h3>
+    <hr>
+    <form action="#" th:action="@{/salaries/saveUpdate}"
+          th:object="${salary}" method="POST">
+        <input type = "hidden" th:field = "*{id}">
+
+        Tên nhân viên
+        <select th:field="*{employee.id}" class="form-select mb-4 w-50" autocomplete="off">
+            <option th:each="employee : ${employees}"
+                    th:value="${employee.id}"
+                    th:text="${employee.hoTen}">
+            </option>
+        </select>
+        Lương cơ bản
+        <input type ="text" th:field = "*{luongCoBan}"
+               class="form-control mb-4 w-50" autocomplete="off">
+        Thưởng
+        <input type ="text" th:field = "*{thuong}"
+               class="form-control mb-4 w-50" autocomplete="off">
+        Phụ cấp
+        <input type ="text" th:field = "*{phuCap}"
+               class="form-control mb-4 w-50" autocomplete="off">
+        Tổng giờ làm
+        <input type ="text" th:field = "*{tongGioLam}"
+               class="form-control mb-4 w-50" autocomplete="off">
+        Tổng giờ tăng ca
+        <input type ="text" th:field = "*{tongGioTangCa}"
+               class="form-control mb-4 w-50" autocomplete="off">
+
+        <input type="hidden" th:field="*{thang}" th:value="${thang}">
+        <input type="hidden" th:field="*{nam}" th:value="${nam}">
+
+        <button type = "submit" class="btn btn-info col-3">Lưu</button>
+    </form>
+
+    <hr>
+    <a th:href = "@{/salaries/viewSalary(thangNam=${session.thangNam})}">Quay lại</a>
+</div>
+
+</body>
+</html>

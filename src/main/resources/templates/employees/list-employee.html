@@ -18,7 +18,7 @@
 
 
 
-    <h3>Danh sách nhân viên</h3>
+    <h2>Danh sách nhân viên</h2>
     <hr>
 
     <!-- display user name and role -->
@@ -42,15 +42,51 @@
     </a>
 
     <a th:href="@{/departments/list}"
-       class = "btn btn-primary btn-sm mb-3"
+       class = "btn btn-success btn-sm mb-3"
        sec:authorize="hasRole('ADMIN')">
         PB
     </a>
     <a th:href="@{/positions/list}"
-       class = "btn btn-primary btn-sm mb-3"
+       class = "btn btn-success btn-sm mb-3"
        sec:authorize="hasRole('ADMIN')">
         CV
     </a>
+    <a id="salaryButton"
+       th:href="@{/salaries/viewSalary}"
+       class="btn btn-secondary btn-sm mb-3"
+       sec:authorize="hasRole('ADMIN')">
+        Lương
+    </a>
+    <a id="projectButton"
+       th:href="@{/projects/list}"
+       class="btn btn-secondary btn-sm mb-3"
+       sec:authorize="hasRole('ADMIN')">
+        Dự án
+    </a>
+
+    <script>
+        function getPreviousMonth() {
+            let now = new Date();
+            let month = now.getMonth();
+            let year = now.getFullYear();
+            if (month == 0) {
+                month = 12;
+                year -= 1;
+            }
+            return year + "-" + (month < 10 ? "0" : "") + month;
+        }
+
+        document.getElementById('salaryButton').href += '?thangNam=' + getPreviousMonth();
+    </script>
+    <script>
+        function updateSalaryButton() {
+            let thangNam = document.getElementById('thangNam').value;
+            document.getElementById('salaryButton').href = '/salaries/viewSalary?thangNam=' + thangNam;
+        }
+
+        document.getElementById('thangNam').addEventListener('change', updateSalaryButton);
+    </script>
+
 
     <form action="#" th:action="@{/employees/search}" method="GET">
         <input type="text" name="keyword" placeholder="Tìm kiếm">

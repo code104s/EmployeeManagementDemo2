@@ -55,5 +55,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employeeRepository.search(keyword);
     }
 
-
+    @Override
+    public List<Employee> findEmployeeNotInSalaryOfMonth(int thang, int nam) {
+        return employeeRepository.findEmployeesNotInSalaryOfMonth(thang, nam);
+    }
 }

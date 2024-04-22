@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- boostrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Cập nhật lương</title>
+</head>
+<body>
+<div class = "container">
+
+    <h3>Cập nhật lương</h3>
+    <hr>
+    <form action="#" th:action="@{/salaries/saveUpdate}" th:object="${salary}" method="POST">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{employee.id}" th:value="${salary.employee.id}">
+
+        Lương cơ bản
+        <input type ="text" th:field = "*{luongCoBan}"
+               class="form-control mb-4 w-50">
+        Thưởng
+        <input type ="text" th:field = "*{thuong}"
+               class="form-control mb-4 w-50">
+        Phụ cấp
+        <input type ="text" th:field = "*{phuCap}"
+               class="form-control mb-4 w-50">
+        Tổng giờ làm
+        <input type ="text" th:field = "*{tongGioLam}"
+               class="form-control mb-4 w-50">
+        Tổng giờ tăng ca
+        <input type ="text" th:field = "*{tongGioTangCa}"
+               class="form-control mb-4 w-50">
+
+        <button type = "submit" class="btn btn-info col-3">Lưu</button>
+    </form>
+
+    <hr>
+    <a th:href = "@{/salaries/viewSalary}">Quay lại</a>
+</div>
+
+</body>
+</html>
