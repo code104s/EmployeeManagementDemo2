@@ -1,6 +1,7 @@
 package com.offlink.quanlynhanvien.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaPB")
-    private long maPB;
+    private int maPB;
 
     @Column(name="TenPB")
     private String tenPB;
@@ -22,6 +23,9 @@ public class Department {
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<Employee> employees;
+
+    @ManyToMany(mappedBy = "departments")
+    private List<Project> projects;
 
     // define constructor
     public Department() {
@@ -35,11 +39,12 @@ public class Department {
 
     // define getter/setter
 
-    public long getMaPB() {
+
+    public int getMaPB() {
         return maPB;
     }
 
-    public void setMaPB(long maPB) {
+    public void setMaPB(int maPB) {
         this.maPB = maPB;
     }
 
@@ -67,8 +72,14 @@ public class Department {
         this.employees = employees;
     }
 
-    // define toString()
+    public List<Project> getProjects() {
+        return projects;
+    }
 
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+    // define toString()
     @Override
     public String toString() {
         return "Department{" +
@@ -76,6 +87,7 @@ public class Department {
                 ", tenPB='" + tenPB + '\'' +
                 ", moTa='" + moTa + '\'' +
                 ", employees=" + employees +
+                ", projects=" + projects +
                 '}';
     }
 }

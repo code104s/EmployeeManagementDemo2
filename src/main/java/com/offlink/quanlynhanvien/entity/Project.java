@@ -11,19 +11,19 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MaDuAn")
-    private long id;
+    @Column(name = "Maduan")
+    private int id;
 
-    @Column(name = "TenDuAn")
+    @Column(name = "Tenduan")
     private String tenDuAn;
 
-    @Column(name = "MoTa")
+    @Column(name = "Mota")
     private String moTa;
 
-    @Column(name = "NgayBatDau")
+    @Column(name = "Ngaybatdau")
     private String ngayBatDau;
 
-    @Column(name = "NgayKetThuc")
+    @Column(name = "Ngayketthuc")
     private String ngayKetThuc;
 
     public enum Status{
@@ -32,28 +32,29 @@ public class Project {
         DaHoanThanh,
         TamDung
     }
-    @Column(name = "TrangThai")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Trangthai")
     private Status trangThai;
 
-    @Column(name = "DanhSacNhanVien")
+    @Column(name = "Danhsachnhanvien")
     private String danhSachNhanVien;
 
-    @Column(name = "NganSach")
+    @Column(name = "Ngansach")
     private double nganSach;
 
     // define fields
     @ManyToMany
     @JoinTable(
-            name = "ProjectNhanVien",
-            joinColumns = @JoinColumn(name = "MaDuAn"),
+            name = "Projectnhanvien",
+            joinColumns = @JoinColumn(name = "Maduan"),
             inverseJoinColumns = @JoinColumn(name = "MaNV")
     )
     private List<Employee> employees;
 
     @ManyToMany
     @JoinTable(
-            name = "ProjectPhongBan",
-            joinColumns = @JoinColumn(name = "MaDuAn"),
+            name = "Projectphongban",
+            joinColumns = @JoinColumn(name = "Maduan"),
             inverseJoinColumns = @JoinColumn(name = "MaPB")
     )
     private List<Department> departments;
@@ -75,11 +76,12 @@ public class Project {
 
     // define getter/setter
 
-    public long getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

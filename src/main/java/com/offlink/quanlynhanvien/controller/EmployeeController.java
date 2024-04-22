@@ -9,6 +9,7 @@ import com.offlink.quanlynhanvien.service.DepartmentService;
 import com.offlink.quanlynhanvien.service.EmployeeService;
 import com.offlink.quanlynhanvien.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -136,6 +137,10 @@ public class EmployeeController {
 
         return "employees/list-employee";
     }
-
+    @GetMapping("/listByDepartment")
+    public ResponseEntity<List<Employee>> getEmployeeByDepartment(@RequestParam("departmentId") int departmentId) {
+        List<Employee> theEmployee = employeeService.findByDepartmentId(departmentId);
+        return ResponseEntity.ok().body(theEmployee);
+    }
 
 }

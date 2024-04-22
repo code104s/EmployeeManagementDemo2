@@ -1,5 +1,7 @@
 package com.offlink.quanlynhanvien.service.Project;
 
+import com.offlink.quanlynhanvien.entity.Department;
+import com.offlink.quanlynhanvien.entity.Employee;
 import com.offlink.quanlynhanvien.entity.Project;
 
 import java.util.List;
@@ -16,4 +18,6 @@ public interface ProjectService {
 
     //define a method to delete a project by id
     void deletedProjectById(long theId);
+
+    List<Project> findByTrangThai(Project.Status trangThai);
 }

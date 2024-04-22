@@ -12,7 +12,7 @@ public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaCV")
-    private Long maCv;
+    private int maCv;
 
     @Column(name = "TenCV")
     private String tenCV;
@@ -36,11 +36,11 @@ public class Position {
     // define getter/setter
 
 
-    public Long getMaCv() {
+    public int getMaCv() {
         return maCv;
     }
 
-    public void setMaCv(Long maCv) {
+    public void setMaCv(int maCv) {
         this.maCv = maCv;
     }
 

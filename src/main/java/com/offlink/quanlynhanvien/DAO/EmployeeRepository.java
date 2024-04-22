@@ -16,4 +16,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query("SELECT e FROM Employee e WHERE e.id NOT IN (SELECT s.employee.id FROM Salary s WHERE s.thang = :thang AND s.nam = :nam)")
     List<Employee> findEmployeesNotInSalaryOfMonth(@Param("thang") int thang, @Param("nam") int nam);
+
+    //findByDepartmentId
+    @Query("SELECT e FROM Employee e WHERE e.department.id = :departmentId")
+    List<Employee> findByDepartmentId(@Param("departmentId") int departmentId);
+
 }

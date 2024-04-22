@@ -1,5 +1,6 @@
 package com.offlink.quanlynhanvien.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -18,7 +19,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaNV")
-    private long id;
+    private int id;
 
     @NotEmpty(message = "Họ tên không được để trống")
     @Size(min=5, max=50, message = "Họ tên phải từ 5 đến 50 ký tự")
@@ -66,11 +67,11 @@ public class Employee {
     // define getter/setter
 
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

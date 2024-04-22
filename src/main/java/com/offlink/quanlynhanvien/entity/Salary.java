@@ -9,7 +9,7 @@ public class Salary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaLT")
-    private long id;
+    private int id;
 
     @OneToOne
     @JoinColumn(name = "MaNV")
@@ -50,24 +50,14 @@ public class Salary {
         this.tongGioLam = tongGioLam;
         this.tongGioTangCa = tongGioTangCa;
     }
-
-    public Salary(int thang, int nam, double thuong, double phuCap, int tongGioLam, int tongGioTangCa) {
-        this.thang = thang;
-        this.nam = nam;
-        //this.luongCoBan = luongCoBan;
-        this.thuong = thuong;
-        /*this.phuCap = phuCap;*/
-        this.tongGioLam = tongGioLam;
-        this.tongGioTangCa = tongGioTangCa;
-    }
-
     // define getter/setter
 
-    public long getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

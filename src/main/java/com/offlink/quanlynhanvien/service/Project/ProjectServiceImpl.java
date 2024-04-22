@@ -1,6 +1,10 @@
 package com.offlink.quanlynhanvien.service.Project;
 
+import com.offlink.quanlynhanvien.DAO.DepartmentRepository;
+import com.offlink.quanlynhanvien.DAO.EmployeeRepository;
 import com.offlink.quanlynhanvien.DAO.ProjectRepository;
+import com.offlink.quanlynhanvien.entity.Department;
+import com.offlink.quanlynhanvien.entity.Employee;
 import com.offlink.quanlynhanvien.entity.Project;
 import com.offlink.quanlynhanvien.entity.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,12 @@ public class ProjectServiceImpl implements ProjectService {
     // inject the ProjectRepository
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     @Override
     public List<Project> findAll() {
@@ -41,5 +51,12 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void deletedProjectById(long theId) {
         projectRepository.deleteById(theId);
+    }
+
+
+    @Override
+    public List<Project> findByTrangThai(Project.Status trangThai) {
+
+        return projectRepository.findByTrangThai(trangThai);
     }
 }

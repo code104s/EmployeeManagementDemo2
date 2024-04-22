@@ -1,6 +1,7 @@
 package com.offlink.quanlynhanvien.service;
 
 import com.offlink.quanlynhanvien.DAO.EmployeeRepository;
+import com.offlink.quanlynhanvien.entity.Department;
 import com.offlink.quanlynhanvien.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.OptionalInt;
 
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 
     // define
     private EmployeeRepository employeeRepository;
@@ -32,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         Employee theEmployee = null;
 
-        if(result.isPresent()) {
+        if (result.isPresent()) {
             theEmployee = result.get();
         } else {
             throw new RuntimeException("Khong tim thay id nhan vien : id = " + theId);
@@ -59,4 +60,11 @@ public class EmployeeServiceImpl implements EmployeeService{
     public List<Employee> findEmployeeNotInSalaryOfMonth(int thang, int nam) {
         return employeeRepository.findEmployeesNotInSalaryOfMonth(thang, nam);
     }
+
+    @Override
+    public List<Employee> findByDepartmentId(int departmentId) {
+        return employeeRepository.findByDepartmentId(departmentId);
+    }
+
 }
+
