@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Project Detail</title>
+</head>
+
+<body>
+<div class="container">
+    <h3>Chi tiết dự án</h3>
+    <hr>
+
+    <h5 th:text="${project.tenDuAn}"></h5>
+    <p>
+        Thời gian làm: <span th:text="${project.ngayBatDau} + ' - ' + ${project.ngayKetThuc}"></span><br>
+        Số thành viên: <span th:text="${#lists.size(project.employees)}"></span><br>
+        Trạng thái: <span th:text="${project.trangThai}"></span><br>
+        Mô tả: <span th:text="${project.moTa}"></span><br>
+        Phòng ban: <span th:text="${project.department.tenPB}"></span><br>
+        Quản lí dự án: <span th:text="${project.manager.hoTen}"></span><br>
+        id dự án: <span th:text="${project.id}"></span><br>
+    </p>
+
+    <h5>Danh sách nhân viên tham gia dự án:</h5>
+    <ul>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>Phòng ban</th>
+                <th>Chức vụ</th>
+                <th>Quản lí</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${project.employees}">
+                <td th:text="${employee.id}"></td> <!-- Số thứ tự -->
+                <td th:text="${employee.hoTen}"></td>
+                <td th:text="${employee.department.tenPB}"></td>
+                <td th:text="${employee.position.tenCV}"></td>
+                <td>
+                    <input type="checkbox" th:checked="${employee.id == project.manager.id}" disabled/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </ul>
+
+    <a th:href = "@{/projects/list}">Quay lại</a>
+</div>
+
+</body>
+</html>

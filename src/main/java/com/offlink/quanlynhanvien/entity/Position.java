@@ -71,13 +71,13 @@ public class Position {
     // define toString()
 
 
+    // Trong lớp Position
     @Override
     public String toString() {
         return "Position{" +
                 "maCv=" + maCv +
                 ", tenCV='" + tenCV + '\'' +
                 ", moTa='" + moTa + '\'' +
-                ", employees=" + employees +
                 '}';
     }
 }

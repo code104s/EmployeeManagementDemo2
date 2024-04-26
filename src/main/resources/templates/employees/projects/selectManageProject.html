@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Include necessary stylesheets and scripts here -->
+    <title>Chọn quản lí dự án</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- boostrap css -->
+    <script>
+        $(document).ready(function() {
+            $('#saveButton').click(function() {
+                var selectedManagerId = $('input[name="manager"]:checked').val();
+                $.ajax({
+                    url: '/projects/saveManager',
+                    data: {
+                        managerId: selectedManagerId
+                    },
+                    success: function() {
+                        window.location.href = '/projects/update';
+                    }
+                });
+            });
+        });
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+
+<h1>Chọn quản lí dự án</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Tên</th>
+        <th>Chức vụ</th>
+        <th>Chọn</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee : ${employees}">
+        <td th:text="${employee.hoTen}"></td>
+        <td th:text="${employee.position.tenCV}"></td>
+        <td><input type="radio" name="manager" th:value="${employee.id}"></td>
+    </tr>
+    <button type="button" id="saveButton" class="btn btn-primary">Lưu</button>
+    </tbody>
+</table>
+
+</body>
+</html>

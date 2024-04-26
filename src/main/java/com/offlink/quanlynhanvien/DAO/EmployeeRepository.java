@@ -18,7 +18,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findEmployeesNotInSalaryOfMonth(@Param("thang") int thang, @Param("nam") int nam);
 
     //findByDepartmentId
-    @Query("SELECT e FROM Employee e WHERE e.department.id = :departmentId")
+    @Query("SELECT e FROM Employee e WHERE e.department.maPB = :departmentId")
     List<Employee> findByDepartmentId(@Param("departmentId") int departmentId);
 
+    // findByHoTen
+    @Query("SELECT e FROM Employee e WHERE e.hoTen LIKE %:hoTen%")
+    List<Employee> findByHoTen(@Param("hoTen") String hoTen);
 }

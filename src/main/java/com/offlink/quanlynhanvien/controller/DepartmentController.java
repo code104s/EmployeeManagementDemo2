@@ -1,6 +1,7 @@
 package com.offlink.quanlynhanvien.controller;
 
 import com.offlink.quanlynhanvien.entity.Department;
+import com.offlink.quanlynhanvien.entity.Employee;
 import com.offlink.quanlynhanvien.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,6 +58,15 @@ public class DepartmentController {
     public String searchDepartment(@RequestParam("keyword") String keyword, Model theModel) {
         theModel.addAttribute("departments", departmentService.searchDepartment(keyword));
         return "employees/list-department";
+    }
+
+    @GetMapping("/detail")
+    public String detail(@RequestParam("departmentId") long theId, Model theModel, Employee theEmployee) {
+        Department theDepartment = departmentService.findDepartmentById(theId);
+
+        theModel.addAttribute("employees", theDepartment.getEmployees());
+        theModel.addAttribute("department", theDepartment);
+        return "employees/department/department-detail";
     }
 
 }

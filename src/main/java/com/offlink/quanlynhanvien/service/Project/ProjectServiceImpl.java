@@ -17,14 +17,18 @@ import java.util.Optional;
 public class ProjectServiceImpl implements ProjectService {
 
     // inject the ProjectRepository
-    @Autowired
     private ProjectRepository projectRepository;
 
-    @Autowired
     private EmployeeRepository employeeRepository;
 
-    @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    public ProjectServiceImpl(ProjectRepository theProjectRepository, EmployeeRepository theEmployeeRepository, DepartmentRepository theDepartmentRepository) {
+        projectRepository = theProjectRepository;
+        employeeRepository = theEmployeeRepository;
+        departmentRepository = theDepartmentRepository;
+    }
 
     @Override
     public List<Project> findAll() {

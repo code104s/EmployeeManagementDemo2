@@ -1,6 +1,9 @@
 package com.offlink.quanlynhanvien.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -12,6 +15,16 @@ import java.util.Date;
 
 @Entity
 @Table(name = "nhanvien")
+
+@JsonIdentityInfo(
+
+        // JsonIdentityInfo đảm bảo đối tượng tuần tự hóa 1 lần
+        // ObjectIdGenerators.PropertyGenerator.class: định nghĩa thuộc tính nào sẽ được sử dụng để xác định định danh của đối tượng
+        // ngăn chặn vòng lặp vô hạn
+
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+
 public class Employee {
 
     // define fields
@@ -50,7 +63,14 @@ public class Employee {
 
     @ManyToOne
     @JoinColumn(name = "MaPB")
+    @JsonBackReference
     private Department department;
+
+    @OneToOne
+    @JoinColumn(name = "MaNP")
+    private Leave leave;
+
+
     // define constructor
     public Employee() {
 
@@ -139,10 +159,18 @@ public class Employee {
         this.department = department;
     }
 
+    public Leave getLeave() {
+        return leave;
+    }
+
+    public void setLeave(Leave leave) {
+        this.leave = leave;
+    }
 
     // define toString()
 
 
+    // Trong lớp Employee
     @Override
     public String toString() {
         return "Employee{" +
@@ -153,8 +181,8 @@ public class Employee {
                 ", soDienThoai='" + soDienThoai + '\'' +
                 ", email='" + email + '\'' +
                 ", diaChi='" + diaChi + '\'' +
-                ", position=" + position +
-                ", department=" + department +
+                ", positionId=" + (position != null ? position.getMaCv() : "null") + // null-safe
+                ", departmentId=" + (department != null ? department.getMaPB() : "null") + // null-safe
                 '}';
     }
 

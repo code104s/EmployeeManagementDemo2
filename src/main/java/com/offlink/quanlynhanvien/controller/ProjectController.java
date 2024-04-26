@@ -6,15 +6,13 @@ import com.offlink.quanlynhanvien.entity.Project;
 import com.offlink.quanlynhanvien.service.DepartmentService;
 import com.offlink.quanlynhanvien.service.EmployeeService;
 import com.offlink.quanlynhanvien.service.Project.ProjectService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -59,10 +57,15 @@ public class ProjectController {
 
     // Trong ProjectController.java
     @GetMapping("/showFormForAdd")
-    public String showFormForAdd(Model theModel) {
+    public String showFormForAdd(@RequestParam(value="departmentId",required = false, defaultValue = "0") int departmentId, Model theModel) {
 
-        List<Employee> employees = employeeService.findAll();
+        List<Employee> employees = employeeService.findByDepartmentId(departmentId);
         List<Department> departments = departmentService.findAll();
+
+        Department department = null;
+        if(departmentId > 0) {
+            department = departmentService.findDepartmentById(departmentId);
+        }
 
         theModel.addAttribute("employees", employees);
         theModel.addAttribute("departments", departments);
@@ -75,5 +78,61 @@ public class ProjectController {
 
         projectService.save(theProject);
         return "redirect:/projects/list";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("projectID") List<Integer> projectIds, Model theModel) {
+
+        // find project id
+        for(int projectId : projectIds) {
+            projectService.deletedProjectById(projectId);
+        }
+
+        theModel.addAttribute("projects", projectIds);
+
+        return "redirect:/projects/list";
+    }
+
+    @GetMapping("/update")
+    public String showFormForUpdate(@RequestParam("projectId") int theId, Model theModel, HttpSession session) {
+        Project theProject = projectService.findProjectById(theId);
+
+        List<Department> theDepartments = departmentService.findAll();
+
+        Integer selectedManagerId = (Integer) session.getAttribute("selectedManagerId");
+        if (selectedManagerId != null) {
+            Employee selectedManager = employeeService.findById(selectedManagerId);
+            theModel.addAttribute("selectedManager", selectedManager);
+        }
+
+        theModel.addAttribute("project", theProject);
+        theModel.addAttribute("departments", theDepartments);
+
+        return "employees/projects/update-projects";
+    }
+
+    @GetMapping("/detail")
+    public String detailProject(@RequestParam("projectId") int projectId, Model theModel) {
+        Project project = projectService.findProjectById(projectId);
+        theModel.addAttribute("project", project);
+        return "employees/projects/detail-project";
+    }
+
+    @GetMapping("/getEmployeesByDepartment")
+    @ResponseBody
+    public List<Employee> getEmployeesByDepartment(@RequestParam("departmentId") int departmentId) {
+        return employeeService.findByDepartmentId(departmentId);
+    }
+
+    @GetMapping("/selectManageDepartment")
+    public String selectDepartment(@RequestParam("departmentId") int departmentId, Model theModel) {
+        List<Employee> employees = employeeService.findByDepartmentId(departmentId);
+        theModel.addAttribute("employees", employees);
+        return "employees/projects/selectManageProject";
+    }
+    @PostMapping("/saveManager")
+    @ResponseBody
+    public void saveManager(@RequestParam("managerId") int managerId, HttpSession session) {
+        session.setAttribute("selectedManagerId", managerId);
     }
 }

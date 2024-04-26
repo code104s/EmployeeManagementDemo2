@@ -73,6 +73,11 @@
                     sec:authorize="hasRole('ADMIN')">
                     Delete
                 </a>
+
+                <a th:href="@{/departments/detail(departmentId=${tempDepartment.maPB})}"
+                   class="btn btn-primary btn-sm">
+                    Detail
+                </a>
             </td>
 
         </tr>

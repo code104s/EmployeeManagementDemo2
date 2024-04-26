@@ -63,7 +63,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findByDepartmentId(int departmentId) {
-        return employeeRepository.findByDepartmentId(departmentId);
+
+        // Kiểm tra xem phòng ban có tồn tại không
+        List<Employee> employees = employeeRepository.findByDepartmentId(departmentId);
+        System.out.println("Employee found by department ID: " + employees);
+
+
+        return employees;
+    }
+
+    @Override
+    public List<Employee> findByHoTen(String hoTen) {
+        return employeeRepository.findByHoTen(hoTen);
     }
 
 }

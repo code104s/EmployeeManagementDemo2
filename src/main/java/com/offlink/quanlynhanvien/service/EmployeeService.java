@@ -20,4 +20,7 @@ public interface EmployeeService {
 
     List<Employee> findByDepartmentId(int departmentId);
 
+    // findByHoTen
+    List<Employee> findByHoTen(String hoTen);
+
 }

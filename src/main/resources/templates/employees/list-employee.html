@@ -64,6 +64,13 @@
         Dự án
     </a>
 
+    <a id="leaveButton"
+         th:href="@{/leaves/list}"
+         class="btn btn-secondary btn-sm mb-3"
+            sec:authorize="hasRole('ADMIN')">
+        Nghỉ phép
+    </a>
+
     <script>
         function getPreviousMonth() {
             let now = new Date();

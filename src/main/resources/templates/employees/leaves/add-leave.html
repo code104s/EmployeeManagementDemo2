@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Thêm lịch nghỉ phép</title>
+
+</head>
+<body>
+<div class="container">
+    <h2>Thêm lịch nghỉ phép</h2>
+    <hr>
+
+    <!-- Add leave form -->
+    <form th:action="@{/leaves/save}" th:object="${leave}" method="post">
+
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label>Tên Nhân viên</label>
+            <input type="text" id="employeeName" th:field="*{employee.hoTen}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Ngày bắt đầu</label>
+            <input type="date" th:field="*{ngayBatDau}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Ngày kết thúc</label>
+            <input type="date" th:field="*{ngayKetThuc}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Lý do</label>
+            <select th:field="*{lyDo}" class="form-control">
+                <option value="NghiOm">Nghỉ ốm</option>
+                <option value="NghiPhep">Nghỉ phép</option>
+                <option value="NghiKhongPhep">Nghỉ không phép</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Trạng thái</label>
+            <select th:field="*{trangThai}" class="form-control">
+                <option value="Duyet">Duyệt</option>
+                <option value="KhongDuyet">Không duyệt</option>
+                <option value="ChoDuyet">Chờ duyệt</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Ghi chú</label>
+            <input type="text" th:field="*{ghiChu}" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+</div>
+
+</body>
+</html>

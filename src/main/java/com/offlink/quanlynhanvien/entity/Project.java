@@ -1,5 +1,7 @@
 package com.offlink.quanlynhanvien.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -42,6 +44,14 @@ public class Project {
     @Column(name = "Ngansach")
     private double nganSach;
 
+    @ManyToOne
+    @JoinColumn(name = "MaPB")
+    private Department department;
+
+    @ManyToOne
+    @JoinColumn(name = "MaQL")
+    private Employee manager;
+
     // define fields
     @ManyToMany
     @JoinTable(
@@ -49,6 +59,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "Maduan"),
             inverseJoinColumns = @JoinColumn(name = "MaNV")
     )
+    @JsonBackReference
     private List<Employee> employees;
 
     @ManyToMany
@@ -76,6 +87,22 @@ public class Project {
 
     // define getter/setter
 
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Employee getManager() {
+        return manager;
+    }
+
+    public void setManager(Employee manager) {
+        this.manager = manager;
+    }
 
     public int getId() {
         return id;
@@ -158,6 +185,7 @@ public class Project {
     }
 
     // define toString()
+
     @Override
     public String toString() {
         return "Project{" +
@@ -169,6 +197,8 @@ public class Project {
                 ", trangThai=" + trangThai +
                 ", danhSachNhanVien='" + danhSachNhanVien + '\'' +
                 ", nganSach=" + nganSach +
+                ", department=" + department +
+                ", manager=" + manager +
                 ", employees=" + employees +
                 ", departments=" + departments +
                 '}';

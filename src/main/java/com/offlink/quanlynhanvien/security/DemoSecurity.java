@@ -24,6 +24,9 @@ public class DemoSecurity {
                 .password("123")
                 .roles("EMPLOYEE")
                 .build();
+        // post man sẽ gửi request với username và password
+
+        // nếu username và password trùng với 1 trong 2 user trên thì sẽ được phép truy cập
 
         return new InMemoryUserDetailsManager(twan,nv);
     }
@@ -46,6 +49,7 @@ public class DemoSecurity {
                 )
                 .logout(logout -> logout.permitAll()
                 );
+
         return http.build();
     }
 }

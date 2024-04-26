@@ -9,11 +9,13 @@ import com.offlink.quanlynhanvien.service.DepartmentService;
 import com.offlink.quanlynhanvien.service.EmployeeService;
 import com.offlink.quanlynhanvien.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -110,6 +112,13 @@ public class EmployeeController {
         theEmployee.setDepartment(theDepartment);
         theEmployee.setPosition(thePosition);
 
+        // Check if all necessary fields are present
+        if (theEmployee.getHoTen() == null || theEmployee.getSoDienThoai() == null) {
+            // Log an error and return an error view
+            System.err.println("Error: Missing necessary fields for Employee object.");
+            return "error";
+        }
+
         // save the employee
         employeeService.save(theEmployee);
 
@@ -138,9 +147,26 @@ public class EmployeeController {
         return "employees/list-employee";
     }
     @GetMapping("/listByDepartment")
-    public ResponseEntity<List<Employee>> getEmployeeByDepartment(@RequestParam("departmentId") int departmentId) {
+    public ResponseEntity<?> getEmployeeByDepartment(@RequestParam("departmentId") int departmentId) {
         List<Employee> theEmployee = employeeService.findByDepartmentId(departmentId);
-        return ResponseEntity.ok().body(theEmployee);
+
+        // Create a new list to hold the employee objects
+        List<Employee> employeeObjects = new ArrayList<>();
+
+        for (Employee employee : theEmployee) {
+            if (employee.getHoTen() == null || employee.getSoDienThoai() == null) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Employee with missing fields found in department " + departmentId);
+            }
+
+            // Check if the employee is an object and add it to the new list
+            if (employee instanceof Employee) {
+                employeeObjects.add(employee);
+            }
+        }
+
+        // Return the new list of employee objects
+        return ResponseEntity.ok(employeeObjects);
     }
 
 }
