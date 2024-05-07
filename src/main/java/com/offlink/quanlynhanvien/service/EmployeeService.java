@@ -18,7 +18,7 @@ public interface EmployeeService {
 
     List<Employee> findEmployeeNotInSalaryOfMonth(int thang, int nam);
 
-    List<Employee> findByDepartmentId(int departmentId);
+    List<Employee> findByDepartmentMaPB(int departmentId);
 
     // findByHoTen
     List<Employee> findByHoTen(String hoTen);

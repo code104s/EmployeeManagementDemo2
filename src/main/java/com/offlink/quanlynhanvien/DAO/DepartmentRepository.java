@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface DepartmentRepository extends JpaRepository<Department,Long> {
 
-    public List<Department> findAllByOrderByTenPBAsc();
+    // public List<Department> findAllByOrderByTenPBAsc();
 
     // search function
     @Query("SELECT e FROM Department e WHERE e.tenPB LIKE %:keyword%")

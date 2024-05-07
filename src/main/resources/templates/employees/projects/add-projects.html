@@ -9,12 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <title>Thêm dự án</title>
 </head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
 <div class="container">
     <h2>Thêm dự án</h2>
@@ -22,102 +18,58 @@
 
     <!-- Add project form -->
     <form th:action="@{/projects/save}" th:object="${project}" method="post">
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label>Tên dự án</label>
-                    <input type="text" th:field="*{tenDuAn}" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label>Mô tả</label>
-                    <input type="text" th:field="*{moTa}" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label>Ngày bắt đầu</label>
-                    <input type="date" th:field="*{ngayBatDau}" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label>Ngày kết thúc</label>
-                    <input type="date" th:field="*{ngayKetThuc}" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label>Trạng thái</label>
-                    <select th:field="*{trangThai}" class="form-control">
-                        <option value="ChuaBatDau">Chưa bắt đầu</option>
-                        <option value="DangThucHien">Đang thực hiện</option>
-                        <option value="DaHoanThanh">Đã hoàn thành</option>
-                        <option value="TamDung">Tạm dừng</option>
-                    </select>
-                </div>
-                <!-- Other fields... -->
-                <div class="form-group">
-                    <label>Phòng ban</label>
-                    <select id="departmentSelect" th:field="*{department}" class="form-control">
-                        <option th:each="department : ${departments}"
-                                th:value="${department.maPB}"
-                                th:text="${department.tenPB}">
-                        </option>
-                    </select>
-                    <button type="button" id="chooseDepartmentButton" class="btn btn-primary mt-2">Chọn phòng ban</button>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <td class="table-success">
-                    <table class="table" id="employeeTable">
-
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Họ tên</th>
-                                <th>Số điện thoại</th>
-                                <th>Chọn</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <script>
-                            $(document).ready(function() {
-                                    $('#chooseDepartmentButton').click(function() {
-                                        var departmentId = $('#departmentSelect').val();
-                                        $.get('/employees/listByDepartment', { departmentId: departmentId }, function(data) {
-                                            console.log('Data received from API:', data); // Log the data received from the API
-                                            var employeeTable = $('#employeeTable tbody');
-                                            employeeTable.empty();
-                                            $.each(data, function(index, employee) {
-
-                                                if (typeof employee === 'object' && employee.hasOwnProperty('id') && employee.hasOwnProperty('hoTen') && employee.hasOwnProperty('soDienThoai')) {
-                                                    console.log('Processing employee:', employee); // Log each employee as they are processed
-                                                    var row = $('<tr>');
-                                                    row.append($('<td>').text(employee.id));
-                                                    row.append($('<td>').text(employee.hoTen));
-                                                    row.append($('<td>').text(employee.soDienThoai));
-                                                    row.append($('<td>').append($('<input>').attr({type: 'checkbox', value: employee.id})));
-                                                    employeeTable.append(row);
-                                                } else {
-                                                    console.error('Employee data is incomplete or not an object:', employee);
-                                                }
-                                            });
-                                        }).fail(function(jqXHR, textStatus, errorThrown) {
-                                            console.error('Error calling API:', textStatus, errorThrown); // Log any errors that occur when calling the API
-                                        });
-                                    });
-                                });
-                        </script>
-                        </tbody>
-
-                    </table>
-                    </td>
-                </div>
-            </div>
+        <div class="form-group">
+            <label>Tên dự án</label>
+            <input type="text" th:field="*{tenDuAn}" class="form-control">
         </div>
-        <hr>
-        <button type="submit" class="btn btn-primary">Lưu</button>
 
-        <a th:href = "@{/projects/list}">Quay lại</a>
+        <div class="form-group">
+            <label>Mô tả</label>
+            <input type="text" th:field="*{moTa}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Ngày bắt đầu</label>
+            <input type="date" th:field="*{ngayBatDau}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Ngày kết thúc</label>
+            <input type="date" th:field="*{ngayKetThuc}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Phòng ban</label>
+            <select th:field="*{department.maPB}" class="form-control">
+                <option th:each="department : ${departments}"
+                        th:value="${department.maPB}"
+                        th:text="${department.tenPB}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Quản lí dự án</label>
+            <select th:field="*{manager.id}" class="form-control">
+                <option th:each="manager : ${managers}"
+                        th:value="${manager.id}"
+                        th:text="${manager.hoTen}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Trạng thái -->
+        <div class="form-group">
+            <label>Trạng thái</label>
+            <select th:field="*{trangThai}" class="form-control">
+                <option value="ChuaBatDau">Chưa bắt đầu</option>
+                <option value="DangThucHien">Đang thực hiện</option>
+                <option value="DaHoanThanh">Đã hoàn thành</option>
+                <option value="TamDung">Tạm dừng</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu</button>
     </form>
 </div>
 

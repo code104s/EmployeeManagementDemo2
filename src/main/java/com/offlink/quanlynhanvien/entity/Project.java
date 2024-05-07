@@ -34,6 +34,7 @@ public class Project {
         DaHoanThanh,
         TamDung
     }
+
     @Enumerated(EnumType.STRING)
     @Column(name = "Trangthai")
     private Status trangThai;

@@ -3,6 +3,7 @@ package com.offlink.quanlynhanvien.controller;
 
 import com.offlink.quanlynhanvien.entity.Employee;
 import com.offlink.quanlynhanvien.entity.Salary;
+import com.offlink.quanlynhanvien.entity.SalaryId;
 import com.offlink.quanlynhanvien.service.EmployeeService;
 import com.offlink.quanlynhanvien.service.Salary.SalaryService;
 import jakarta.servlet.http.HttpSession;
@@ -92,9 +93,10 @@ public class SalaryController {
         return "employees/salaries/add-salaries";
     }
 
-    // mapping save
-    /*@PostMapping("/save")
+    /*// mapping save
+    @PostMapping("/save")
     public String saveSalary(@ModelAttribute("salary") Salary theSalary,@RequestParam("employeeId") long employeeId) {
+
         // tìm employee theo id
         Employee employee = employeeService.findById(employeeId);
 
@@ -114,6 +116,7 @@ public class SalaryController {
         // trả về trang danh sách lương của tháng đó
         return "redirect:/salaries/viewSalary?thangNam=" + thangNam;
     }*/
+
     @PostMapping("/saveUpdate")
     public String saveUpdatedSalary(@ModelAttribute("salary") Salary theSalary) {
         // lấy tháng nam từ sesion
@@ -131,7 +134,7 @@ public class SalaryController {
         theSalary.setNam(nam);
 
         // cập nhật lương trong cơ sở dữ liệu
-        salaryService.save(theSalary);
+        salaryService.saveUpdateSalary(theSalary);
 
         // tạo chuỗi thangNam
         String thangNam = nam + "-" + thang;
@@ -140,25 +143,51 @@ public class SalaryController {
         return "redirect:/salaries/viewSalary?thangNam=" + thangNam;
     }
 
+
+    // save new Salary
+    @PostMapping("/save")
+    public String saveNewSalary(@ModelAttribute("salary") Salary theSalary) {
+
+        // Lay chuoi thang nam tu session
+        Integer thang = (Integer) httSession.getAttribute("thang");
+        Integer nam = (Integer) httSession.getAttribute("nam");
+
+        // dat gia tri thang va nam cho salary
+        theSalary.setThang(thang);
+        theSalary.setNam(nam);
+
+        // update luong
+        salaryService.save(theSalary);
+
+        // tao chuoi thang nam
+        String thangNam = nam + "-" + thang;
+
+        // tra ve trang danh sach
+        return "redirect:/salaries/viewSalary?thangNam=" + thangNam;
+    }
+
+
     // mapping update
     @GetMapping("/showFormForUpdate")
-    public String updateSalary(@RequestParam("salaryId") long theId, Model theModel) {
-        Salary theSalary = salaryService.findSalaryById(theId);
+    public String updateSalary(@RequestParam("maNV") int maNV, @RequestParam("thang") int thang, @RequestParam("nam") int nam, Model theModel){
+        Salary theSalary = salaryService.findSalaryById(maNV, thang, nam);
         theModel.addAttribute("salary", theSalary);
         return "employees/salaries/update-salary";
     }
 
 
     // mapping delete
+    // SalaryController.java
     @GetMapping("/delete")
-    public String delete(@RequestParam("salaryId") long theId) {
-        salaryService.deletedSalaryById(theId);
+    public String delete(@RequestParam("maNV") int maNV, @RequestParam("thang") int thang, @RequestParam("nam") int nam) {
 
-        // lấy tháng nam từ sesion
-        int thang = (int) httSession.getAttribute("thang");
-        int nam = (int) httSession.getAttribute("nam");
+        // nếu không xóa được, chuyển hướng người dùng về trang danh sách lương
+        if(!salaryService.deletedSalaryById(maNV, thang, nam)) {
+            return "redirect:/salaries/list";
+        }
 
-        // tạo chuỗi thangNam
+        thang = (int) httSession.getAttribute("thang");
+        nam = (int) httSession.getAttribute("nam");
         String thangNam = nam + "-" + thang;
 
         return "redirect:/salaries/viewSalary?thangNam=" + thangNam;

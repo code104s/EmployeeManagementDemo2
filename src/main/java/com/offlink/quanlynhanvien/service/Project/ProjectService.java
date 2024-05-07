@@ -20,4 +20,5 @@ public interface ProjectService {
     void deletedProjectById(long theId);
 
     List<Project> findByTrangThai(Project.Status trangThai);
+
 }

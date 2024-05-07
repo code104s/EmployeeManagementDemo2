@@ -14,8 +14,8 @@
     <h3>Cập nhật lương</h3>
     <hr>
     <form action="#" th:action="@{/salaries/saveUpdate}" th:object="${salary}" method="POST">
-        <input type="hidden" th:field="*{id}">
-        <input type="hidden" th:field="*{employee.id}" th:value="${salary.employee.id}">
+
+        <input type="hidden" th:field="*{maNV}">
 
         Lương cơ bản
         <input type ="text" th:field = "*{luongCoBan}"

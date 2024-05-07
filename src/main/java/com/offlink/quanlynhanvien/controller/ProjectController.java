@@ -57,25 +57,20 @@ public class ProjectController {
 
     // Trong ProjectController.java
     @GetMapping("/showFormForAdd")
-    public String showFormForAdd(@RequestParam(value="departmentId",required = false, defaultValue = "0") int departmentId, Model theModel) {
-
-        List<Employee> employees = employeeService.findByDepartmentId(departmentId);
+    public String showFormForAdd(Model theModel) {
         List<Department> departments = departmentService.findAll();
-
-        Department department = null;
-        if(departmentId > 0) {
-            department = departmentService.findDepartmentById(departmentId);
-        }
-
-        theModel.addAttribute("employees", employees);
+        List<Employee> managers = employeeService.findAll();
+        theModel.addAttribute("managers", managers);
         theModel.addAttribute("departments", departments);
         theModel.addAttribute("project", new Project());
         return "employees/projects/add-projects";
     }
 
-    @GetMapping("/save")
-    public String saveProject(@ModelAttribute("project") Project theProject, @RequestParam("employees") List<Integer> employeeIds) {
-
+    @PostMapping("/save")
+    public String saveProject(@ModelAttribute("project") Project theProject) {
+        // Lấy thông tin về quản lý dự án từ request
+        Employee manager = employeeService.findById(theProject.getManager().getId());
+        theProject.setManager(manager);
         projectService.save(theProject);
         return "redirect:/projects/list";
     }
@@ -120,16 +115,17 @@ public class ProjectController {
 
     @GetMapping("/getEmployeesByDepartment")
     @ResponseBody
-    public List<Employee> getEmployeesByDepartment(@RequestParam("departmentId") int departmentId) {
-        return employeeService.findByDepartmentId(departmentId);
+    public List<Employee> getEmployeesByDepartment(@RequestParam("departmentId") int maPB) {
+        return employeeService.findByDepartmentMaPB(maPB);
     }
 
     @GetMapping("/selectManageDepartment")
     public String selectDepartment(@RequestParam("departmentId") int departmentId, Model theModel) {
-        List<Employee> employees = employeeService.findByDepartmentId(departmentId);
+        List<Employee> employees = employeeService.findByDepartmentMaPB(departmentId);
         theModel.addAttribute("employees", employees);
         return "employees/projects/selectManageProject";
     }
+
     @PostMapping("/saveManager")
     @ResponseBody
     public void saveManager(@RequestParam("managerId") int managerId, HttpSession session) {

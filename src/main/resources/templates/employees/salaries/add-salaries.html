@@ -13,12 +13,12 @@
 
     <h3>Thêm d/s lương</h3>
     <hr>
-    <form action="#" th:action="@{/salaries/saveUpdate}"
+    <form action="#" th:action="@{/salaries/save}"
           th:object="${salary}" method="POST">
         <input type = "hidden" th:field = "*{id}">
 
         Tên nhân viên
-        <select th:field="*{employee.id}" class="form-select mb-4 w-50" autocomplete="off">
+        <select th:field="*{maNV}" class="form-select mb-4 w-50" autocomplete="off">
             <option th:each="employee : ${employees}"
                     th:value="${employee.id}"
                     th:text="${employee.hoTen}">

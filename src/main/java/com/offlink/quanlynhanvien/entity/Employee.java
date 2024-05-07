@@ -12,6 +12,7 @@ import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "nhanvien")
@@ -70,6 +71,8 @@ public class Employee {
     @JoinColumn(name = "MaNP")
     private Leave leave;
 
+    @OneToMany(mappedBy = "employee")
+    private List<Salary> salaries;
 
     // define constructor
     public Employee() {

@@ -62,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> findByDepartmentId(int departmentId) {
+    public List<Employee> findByDepartmentMaPB(int departmentId) {
 
         // Kiểm tra xem phòng ban có tồn tại không
         List<Employee> employees = employeeRepository.findByDepartmentId(departmentId);

@@ -50,6 +50,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void save(Project theProject) {
         projectRepository.save(theProject);
+
     }
 
     @Override
@@ -63,4 +64,5 @@ public class ProjectServiceImpl implements ProjectService {
 
         return projectRepository.findByTrangThai(trangThai);
     }
+
 }

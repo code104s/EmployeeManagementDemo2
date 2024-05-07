@@ -78,7 +78,7 @@
         </thead>
         <tbody>
         <tr th:each="salary : ${salaries}">
-              <td th:text="${salary.employee.id}"></td>
+              <td th:text="${salary.employee.id}">
               <td th:text="${salary.employee.hoTen}"></td>
               <td th:text="${salary.employee.position.tenCV}"></td>
               <td th:text="${salary.luongCoBan + ' $/hour'}"></td>
@@ -89,13 +89,13 @@
               <td th:text="${'$' + (salary.luongCoBan * (salary.tongGioLam + salary.tongGioTangCa) + salary.thuong + salary.phuCap)}"></td>
 
             <td>
-                <a th:href="@{/salaries/showFormForUpdate(salaryId=${salary.id})}"
+                <a th:href="@{'/salaries/showFormForUpdate'(maNV=${salary.maNV}, thang=${salary.thang}, nam=${salary.nam})}"
                    class="btn btn-info btn-sm"
                    sec:authorize="hasRole('ADMIN')">
                     Update
                 </a>
 
-                <a th:href="@{/salaries/delete(salaryId=${salary.id})}"
+                <a th:href="@{'/salaries/delete'(maNV=${salary.maNV}, thang=${salary.thang}, nam=${salary.nam})}"
                    class="btn btn-danger btn-sm"
                    onclick="if (!(confirm('Xóa lương này?'))) return false"
                    sec:authorize="hasRole('ADMIN')">

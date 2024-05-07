@@ -148,7 +148,7 @@ public class EmployeeController {
     }
     @GetMapping("/listByDepartment")
     public ResponseEntity<?> getEmployeeByDepartment(@RequestParam("departmentId") int departmentId) {
-        List<Employee> theEmployee = employeeService.findByDepartmentId(departmentId);
+        List<Employee> theEmployee = employeeService.findByDepartmentMaPB(departmentId);
 
         // Create a new list to hold the employee objects
         List<Employee> employeeObjects = new ArrayList<>();
