@@ -41,8 +41,8 @@
         <div class="form-group">
             <label>Ngày kết thúc</label>
             <input type="date" th:field="*{ngayKetThuc}" class="form-control">
+            <p class="alert alert-danger" th:if="${dateError}" th:text="${dateError}"></p>
         </div>
-        <p class="alert alert-danger" th:if="${#fields.hasErrors('ngayKetThuc')}" th:errors="*{ngayKetThuc}"></p>
 
         <div class="form-group">
             <label>Lý do</label>

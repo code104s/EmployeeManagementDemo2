@@ -3,6 +3,7 @@ package com.offlink.quanlynhanvien.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -24,6 +25,7 @@ public class Leave {
     private LocalDate ngayBatDau;
 
     @NotNull(message = "Ngày kết thúc không được để trống")
+
     @Column(name = "Ngayketthuc")
     private LocalDate ngayKetThuc;
 

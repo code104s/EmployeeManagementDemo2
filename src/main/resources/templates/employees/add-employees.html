@@ -25,7 +25,7 @@
                 class="error" th:text="${error}">Error</li>
         </ul>-->
         Ngày sinh:
-        <input type="text" th:field = "*{ngaySinh}"
+        <input type="date" th:field = "*{ngaySinh}"
                class="form-control mb-4 w-25">
         <p class="alert alert-danger" th:if="${#fields.hasErrors('ngaySinh')}" th:errors="*{ngaySinh}"></p>
 

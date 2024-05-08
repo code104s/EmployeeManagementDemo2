@@ -83,7 +83,24 @@ public class LeaveController {
         if(result.hasErrors()) {
             return "employees/leaves/add-leave";
         }
-        
+
+        if(theLeave.getNgayBatDau() == null || theLeave.getNgayKetThuc() == null) {
+            theModel.addAttribute("dateError", "Ngày bắt đầu và ngày kết thúc không được để trống");
+            return "employees/leaves/add-leave";
+        }
+        // Ensure end date is after start date
+        if(theLeave.getNgayKetThuc().compareTo(theLeave.getNgayBatDau()) <= 0) {
+
+            Employee employee = employeeService.findById(theLeave.getEmployee().getId());
+
+            theLeave.setEmployee(employee);
+
+            List<Employee> employees = employeeService.findAll();
+
+            theModel.addAttribute("dateError", "Ngày kết thúc phải sau ngày bắt đầu");
+            return "employees/leaves/add-leave"; // or "employees/leaves/update-leave" depending on your use case
+        }
+
         leaveService.save(theLeave);
         return "redirect:/leaves/list";
     }
