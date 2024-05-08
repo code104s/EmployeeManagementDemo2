@@ -78,7 +78,7 @@ public class ProjectController {
         return "redirect:/projects/list";
     }
 
-    @PostMapping("/saveUpdate")
+    /*@PostMapping("/saveUpdate")
     public String saveOrUpdateProject(@ModelAttribute("project") Project theProject,
                                       @RequestParam("employeeIds") List<Long> employeeIds) {
         // Find the employees by their ids
@@ -92,7 +92,7 @@ public class ProjectController {
 
         // Redirect to the project list page
         return "redirect:/projects/list";
-    }
+    }*/
 
     // delete project
     @GetMapping("/delete")

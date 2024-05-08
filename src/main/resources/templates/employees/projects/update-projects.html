@@ -16,7 +16,7 @@
     <h2>Cập nhật dự án</h2>
     <hr>
 
-    <form th:action="@{/projects/saveUpdate}" method="post">
+    <form th:action="@{/projects/save}" method="post">
         <input type="hidden" th:field="*{project.id}" class="form-control">
 
         <div class="form-group">
@@ -59,6 +59,7 @@
                         th:text="${manager.hoTen}">
                 </option>
             </select>
+        </div>
 
         <!-- Trạng thái -->
         <div class="form-group">
@@ -73,7 +74,6 @@
 
         <button type="submit" class="btn btn-primary">Lưu</button>
 
-        </div>
     </form>
 
     <!-- Return to the list of projects -->
