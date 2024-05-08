@@ -6,101 +6,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-    <title>Update Project</title>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#department').change(function() {
-                var departmentId = $(this).val();
-                $.ajax({
-                    url: '/projects/getEmployeesByDepartment',
-                    data: {
-                        departmentId: departmentId
-                    },
-                    success: function(data) {
-                        var select = $('#manager');
-                        select.empty();
-                        $.each(data, function(index, value) {
-                            select.append('<option value="' + value.id + '">' + value.hoTen + '</option>');
-                        });
-                    }
-                });
-            });
-        });
-    </script>
-
+    <title>Cập nhật dự án</title>
 </head>
-
 <body>
 <div class="container">
-    <h3>Cập nhật dự án</h3>
+    <h2>Cập nhật dự án</h2>
     <hr>
 
-    <form action="#" th:action="@{/projects/update}" th:object="${project}" method="post">
-        <input type="hidden" th:field="*{id}">
+    <form th:action="@{/projects/saveUpdate}" method="post">
+        <input type="hidden" th:field="*{project.id}" class="form-control">
+
         <div class="form-group">
             <label>Tên dự án</label>
-            <input type="text" th:field="*{tenDuAn}" class="form-control">
+            <input type="text" th:field="*{project.tenDuAn}" class="form-control">
         </div>
+
         <div class="form-group">
-            <label>Thời gian bắt đầu</label>
-            <input type="date" th:field="*{ngayBatDau}" class="form-control">
+            <label>Mô tả</label>
+            <input type="text" th:field="*{project.moTa}" class="form-control">
         </div>
+
         <div class="form-group">
-            <label>Thời gian kết thúc</label>
-            <input type="date" th:field="*{ngayKetThuc}" class="form-control">
+            <label>Ngày bắt đầu</label>
+            <input type="date" th:field="*{project.ngayBatDau}" class="form-control">
         </div>
+
+        <div class="form-group">
+            <label>Ngày kết thúc</label>
+            <input type="date" th:field="*{project.ngayKetThuc}" class="form-control">
+        </div>
+
+        <!-- Phòng ban -->
+        <div class="form-group">
+            <label>Phòng ban</label>
+            <select th:field="*{project.department.maPB}" class="form-control">
+                <option th:each="department : ${departments}"
+                        th:value="${department.maPB}"
+                        th:text="${department.tenPB}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Quản lí dự án -->
+        <div class="form-group">
+            <label>Quản lí dự án</label>
+            <select th:field="*{project.manager.id}" class="form-control">
+                <option th:each="manager : ${managers}"
+                        th:value="${manager.id}"
+                        th:text="${manager.hoTen}">
+                </option>
+            </select>
+
+        <!-- Trạng thái -->
         <div class="form-group">
             <label>Trạng thái</label>
-            <select th:field="*{trangThai}" class="form-control">
+            <select th:field="*{project.trangThai}" class="form-control">
                 <option value="ChuaBatDau">Chưa bắt đầu</option>
                 <option value="DangThucHien">Đang thực hiện</option>
                 <option value="DaHoanThanh">Đã hoàn thành</option>
                 <option value="TamDung">Tạm dừng</option>
             </select>
         </div>
-        <div class="form-group">
-            <label>Mô tả</label>
-            <textarea th:field="*{moTa}" class="form-control"></textarea>
-        </div>
 
-        <div class="form-group">
-            <label>Phòng ban</label>
-            <select id="department" th:field="*{department.maPB}" class="form-control">
-                <option th:each="department : ${departments}"
-                        th:value="${department.maPB}"
-                        th:text="${department.tenPB}">
-                </option>
-            </select>
-            <button type="button" id="selectDepartment" class="btn btn-primary"
-                    th:attr="onclick='window.location.href=\'' + @{/projects/selectManageDepartment(departmentId=${project.department.maPB})} + '\''">Chọn</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
 
-        <div class="form-group">
-            <label>Quản lí dự án</label>
-            <p th:if="${selectedManager != null}" th:text="${selectedManager.hoTen}"></p>
-            <p th:if="${selectedManager != null}" th:text="${selectedManager.position.tenCV}"></p>
         </div>
-
-        <div class="form-group">
-            <label>Thành viên tham gia</label>
-            <select th:field="*{employees}" class="form-control" multiple>
-                <option th:each="employee : ${employees}"
-                        th:value="${employee.id}"
-                        th:text="${employee.hoTen}">
-                </option>
-            </select>
-        </div>
-        <!-- Other fields... -->
-        <button type="submit" class="btn btn-primary">Cập nhật</button>
-        <a th:href = "@{/projects/list}">Quay lại</a>
     </form>
 
-
+    <!-- Return to the list of projects -->
+    <a th:href = "@{/projects/list}">Quay lại</a>
 </div>
 
 </body>
+
 </html>

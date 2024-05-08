@@ -46,15 +46,23 @@ public class LeaveController {
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel) {
         Leave theLeave = new Leave();
+        List<Employee> employees = employeeService.findAll();
+
         theModel.addAttribute("leave", theLeave);
+        theModel.addAttribute("employees", employees);
+
         return "employees/leaves/add-leave";
     }
 
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("leaveId") int theId, Model theModel) {
         Leave theLeave = leaveService.findById(theId);
+        List<Employee> employees = employeeService.findAll();
+
         theModel.addAttribute("leave", theLeave);
-        return "employees/leaves/add-leave";
+        theModel.addAttribute("employees", employees);
+
+        return "employees/leaves/update-leave";
     }
 
     @GetMapping("/delete")
@@ -63,10 +71,10 @@ public class LeaveController {
         return "redirect:/leaves/list";
     }
 
+    // save a leave
     @PostMapping("/save")
-    public String saveLeave(@RequestParam("leaveId") int theId, Model theModel) {
-        Leave theLeave = leaveService.findById(theId);
-        theModel.addAttribute("leave", theLeave);
-        return "employees/leaves/add-leave";
+    public String saveLeave(@ModelAttribute("leave") Leave theLeave) {
+        leaveService.save(theLeave);
+        return "redirect:/leaves/list";
     }
 }

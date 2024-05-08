@@ -25,4 +25,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     // findByHoTen
     @Query("SELECT e FROM Employee e WHERE e.hoTen LIKE %:hoTen%")
     List<Employee> findByHoTen(@Param("hoTen") String hoTen);
+
+    List<Employee> findAllByIdIn(List<Long> ids);
 }

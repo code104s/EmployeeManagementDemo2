@@ -77,5 +77,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findByHoTen(hoTen);
     }
 
+    @Override
+    public List<Employee> findAllByIdIn(List<Long> employeeIds) {
+        return employeeRepository.findAllByIdIn(employeeIds);
+    }
+
+
 }
 

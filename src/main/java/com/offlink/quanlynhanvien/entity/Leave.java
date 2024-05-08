@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name="nghiphep")
 public class Leave {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaNP")

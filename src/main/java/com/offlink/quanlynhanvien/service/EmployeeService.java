@@ -23,4 +23,5 @@ public interface EmployeeService {
     // findByHoTen
     List<Employee> findByHoTen(String hoTen);
 
+    List<Employee> findAllByIdIn(List<Long> employeeIds);
 }

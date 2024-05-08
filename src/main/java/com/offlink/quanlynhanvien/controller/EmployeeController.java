@@ -8,11 +8,13 @@ import com.offlink.quanlynhanvien.entity.Position;
 import com.offlink.quanlynhanvien.service.DepartmentService;
 import com.offlink.quanlynhanvien.service.EmployeeService;
 import com.offlink.quanlynhanvien.service.PositionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/employees")
+@Valid
 public class EmployeeController {
 
     // load employee data
@@ -102,7 +105,12 @@ public class EmployeeController {
     @PostMapping("/save")
     public String saveEmployee(@ModelAttribute("employee")Employee theEmployee,
                                @RequestParam("department") long departmentId,
-                               @RequestParam("position") long positionId) {
+                               @RequestParam("position") long positionId,
+                               BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "employees/add-employees";
+        }
 
         // get department and position
         Department theDepartment = departmentService.findDepartmentById(departmentId);

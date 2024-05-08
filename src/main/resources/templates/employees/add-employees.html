@@ -18,6 +18,8 @@
         Họ và tên:
         <input type = "text" th:field = "*{hoTen}"
                class="form-control mb-4 w-25">
+        <p th:if="${#fields.hasErrors('hoTen')}" th:errors="*{hoTen}" class="error"></p>
+
         <!--<ul>
             <li th:each="error : ${#fields.errors('hoTen')}"
                 class="error" th:text="${error}">Error</li>

@@ -7,6 +7,7 @@ import com.offlink.quanlynhanvien.service.DepartmentService;
 import com.offlink.quanlynhanvien.service.EmployeeService;
 import com.offlink.quanlynhanvien.service.Project.ProjectService;
 import jakarta.servlet.http.HttpSession;
+import org.apache.catalina.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -58,6 +59,7 @@ public class ProjectController {
     // Trong ProjectController.java
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel) {
+
         List<Department> departments = departmentService.findAll();
         List<Employee> managers = employeeService.findAll();
         theModel.addAttribute("managers", managers);
@@ -69,39 +71,49 @@ public class ProjectController {
     @PostMapping("/save")
     public String saveProject(@ModelAttribute("project") Project theProject) {
         // Lấy thông tin về quản lý dự án từ request
+
         Employee manager = employeeService.findById(theProject.getManager().getId());
         theProject.setManager(manager);
         projectService.save(theProject);
         return "redirect:/projects/list";
     }
 
+    @PostMapping("/saveUpdate")
+    public String saveOrUpdateProject(@ModelAttribute("project") Project theProject,
+                                      @RequestParam("employeeIds") List<Long> employeeIds) {
+        // Find the employees by their ids
+        List<Employee> employees = employeeService.findAllByIdIn(employeeIds);
+
+        // Add the employees to the project
+        theProject.setEmployees(employees);
+
+        // Save the updated project
+        projectService.save(theProject);
+
+        // Redirect to the project list page
+        return "redirect:/projects/list";
+    }
+
+    // delete project
     @GetMapping("/delete")
-    public String delete(@RequestParam("projectID") List<Integer> projectIds, Model theModel) {
-
-        // find project id
-        for(int projectId : projectIds) {
-            projectService.deletedProjectById(projectId);
-        }
-
-        theModel.addAttribute("projects", projectIds);
-
+    public String deleteProject(@RequestParam("projectId") long theId) {
+        projectService.deletedProjectById(theId);
         return "redirect:/projects/list";
     }
 
     @GetMapping("/update")
-    public String showFormForUpdate(@RequestParam("projectId") int theId, Model theModel, HttpSession session) {
+    public String showFormForUpdate(@RequestParam("projectId") long theId, Model theModel) {
+        // Get the project from the service
         Project theProject = projectService.findProjectById(theId);
+        List<Department> departments = departmentService.findAll();
+        List<Employee> theManager = employeeService.findAll();
 
-        List<Department> theDepartments = departmentService.findAll();
-
-        Integer selectedManagerId = (Integer) session.getAttribute("selectedManagerId");
-        if (selectedManagerId != null) {
-            Employee selectedManager = employeeService.findById(selectedManagerId);
-            theModel.addAttribute("selectedManager", selectedManager);
-        }
-
+        // Set project as a model attribute to pre-populate the form
         theModel.addAttribute("project", theProject);
-        theModel.addAttribute("departments", theDepartments);
+        theModel.addAttribute("departments", departments);
+        theModel.addAttribute("managers", theManager);
+
+        theModel.addAttribute("manager", new Employee());
 
         return "employees/projects/update-projects";
     }
@@ -130,5 +142,37 @@ public class ProjectController {
     @ResponseBody
     public void saveManager(@RequestParam("managerId") int managerId, HttpSession session) {
         session.setAttribute("selectedManagerId", managerId);
+    }
+
+    // show form add employee to project
+    @GetMapping("/showFormAddEmployeeToProject")
+    public String addEmployee(@RequestParam("projectId") int projectId, Model theModel) {
+
+        Project project = projectService.findProjectById(projectId);
+
+        List<Employee> employees = employeeService.findByDepartmentMaPB(project.getDepartment().getMaPB());
+        theModel.addAttribute("project", project);
+        theModel.addAttribute("employees", employees);
+        return "employees/projects/add-member-project";
+    }
+
+    // save employee to project
+    @PostMapping("/addEmployeeToProject")
+    public String addEmployeeToProject(@RequestParam("projectId") long projectId,
+                                       @RequestParam("employeeIds") List<Long> employeeIds) {
+        // Find the project by id
+        Project theProject = projectService.findProjectById(projectId);
+
+        // Find the employees by their ids
+        List<Employee> employees = employeeService.findAllByIdIn(employeeIds);
+
+        // Add the employees to the project
+        theProject.setEmployees(employees);
+
+        // Save the updated project
+        projectService.save(theProject);
+
+        // Redirect to the project list page
+        return "redirect:/projects/list";
     }
 }
