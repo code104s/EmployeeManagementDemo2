@@ -106,9 +106,28 @@ public class EmployeeController {
     public String saveEmployee(@ModelAttribute("employee")Employee theEmployee,
                                @RequestParam("department") long departmentId,
                                @RequestParam("position") long positionId,
-                               BindingResult bindingResult) {
+                               @Valid Employee employee,
+                               BindingResult bindingResult,
+                               Model model) {
 
         if (bindingResult.hasErrors()) {
+
+            // get department and position
+            Department theDepartment = departmentService.findDepartmentById(departmentId);
+            Position thePosition = positionService.findPositionById(positionId);
+
+            // set department and position
+            theEmployee.setDepartment(theDepartment);
+            theEmployee.setPosition(thePosition);
+
+            // get list of department and position
+            List<Department> theDepartments = departmentService.findAll();
+            List<Position> thePositions = positionService.findAll();
+
+            // add list of department and position to the model
+            model.addAttribute("departments", theDepartments);
+            model.addAttribute("positions", thePositions);
+
             return "employees/add-employees";
         }
 
@@ -176,5 +195,6 @@ public class EmployeeController {
         // Return the new list of employee objects
         return ResponseEntity.ok(employeeObjects);
     }
+
 
 }

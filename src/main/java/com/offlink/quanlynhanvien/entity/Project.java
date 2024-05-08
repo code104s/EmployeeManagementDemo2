@@ -3,6 +3,8 @@ package com.offlink.quanlynhanvien.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
@@ -16,15 +18,21 @@ public class Project {
     @Column(name = "Maduan")
     private int id;
 
+    @NotNull(message = "Tên dự án không được để trống")
+    @Size(min=5, max=50, message = "Tên dự án phải từ 5 đến 50 ký tự")
     @Column(name = "Tenduan")
     private String tenDuAn;
 
+    @NotNull(message = "Mô tả không được để trống")
+    @Size(min=5, max=50, message = "Mô tả phải từ 5 đến 50 ký tự")
     @Column(name = "Mota")
     private String moTa;
 
+    @NotNull(message = "Ngày bắt đầu không được để trống")
     @Column(name = "Ngaybatdau")
     private String ngayBatDau;
 
+    @NotNull(message = "Ngày kết thúc không được để trống")
     @Column(name = "Ngayketthuc")
     private String ngayKetThuc;
 

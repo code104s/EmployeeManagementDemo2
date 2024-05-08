@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
@@ -35,33 +33,44 @@ public class Employee {
     @Column(name = "MaNV")
     private int id;
 
-    @NotEmpty(message = "Họ tên không được để trống")
+    @NotNull(message = "Họ tên không được để trống")
     @Size(min=5, max=50, message = "Họ tên phải từ 5 đến 50 ký tự")
     @Column(name = "Hoten")
     private String hoTen;
 
+    @NotNull(message = "Ngày sinh không được để trống")
+    @Past(message = "Ngày sinh phải nhỏ hơn ngày hiện tại")
     @Column(name = "Ngaysinh")
     private LocalDate ngaySinh;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "Gioitinh")
     private Gender gioiTinh;
 
-    @NotEmpty(message = "Số điện thoại không được để trống")
+    @NotNull(message = "Số điện thoại không được để trống")
     @Size(min=10, max=11, message = "Số điện thoại phải từ 10 đến 11 ký tự")
     @Column(name = "Sodienthoai")
     private String soDienThoai;
 
+    @NotNull(message = "Email không được để trống")
+    @Size(min=5, max=50, message = "Email phải từ 5 đến 50 ký tự")
+    @Email(message = "Email không đúng định dạng")
     @Column(name = "Email")
     private String email;
 
+
+    @NotNull(message = "Địa chỉ không được để trống")
+    @Size(min=5, max=50, message = "Địa chỉ phải từ 5 đến 50 ký tự")
     @Column(name = "Diachi")
     private String diaChi;
 
+    @NotNull(message = "Chức vụ không được để trống")
     @ManyToOne
     @JoinColumn(name = "MaCV")
     private Position position;
 
+    @NotNull(message = "Phòng ban không được để trống")
     @ManyToOne
     @JoinColumn(name = "MaPB")
     @JsonBackReference

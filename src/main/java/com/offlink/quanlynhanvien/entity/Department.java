@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -23,9 +25,13 @@ public class Department {
     @Column(name = "MaPB")
     private int maPB;
 
+    @NotNull(message = "Tên phòng ban không được để trống")
+    @Size(min=5, max=50, message = "Tên phòng ban phải từ 5 đến 50 ký tự")
     @Column(name="TenPB")
     private String tenPB;
 
+    @NotNull(message = "Mô tả không được để trống")
+    @Size(min=5, max=50, message = "Mô tả phải từ 5 đến 50 ký tự")
     @Column(name = "Mota")
     private String moTa;
 

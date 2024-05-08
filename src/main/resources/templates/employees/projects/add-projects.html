@@ -22,21 +22,25 @@
             <label>Tên dự án</label>
             <input type="text" th:field="*{tenDuAn}" class="form-control">
         </div>
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('tenDuAn')}" th:errors="*{tenDuAn}"></p>
 
         <div class="form-group">
             <label>Mô tả</label>
             <input type="text" th:field="*{moTa}" class="form-control">
         </div>
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('moTa')}" th:errors="*{moTa}"></p>
 
         <div class="form-group">
             <label>Ngày bắt đầu</label>
             <input type="date" th:field="*{ngayBatDau}" class="form-control">
         </div>
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('ngayBatDau')}" th:errors="*{ngayBatDau}"></p>
 
         <div class="form-group">
             <label>Ngày kết thúc</label>
             <input type="date" th:field="*{ngayKetThuc}" class="form-control">
         </div>
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('ngayKetThuc')}" th:errors="*{ngayKetThuc}"></p>
 
         <div class="form-group">
             <label>Phòng ban</label>

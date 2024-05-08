@@ -3,9 +3,11 @@ package com.offlink.quanlynhanvien.controller;
 import com.offlink.quanlynhanvien.entity.Department;
 import com.offlink.quanlynhanvien.entity.Employee;
 import com.offlink.quanlynhanvien.service.DepartmentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 // DepartmentController.java
@@ -35,7 +37,13 @@ public class DepartmentController {
     }
 
     @PostMapping("/save")
-    public String saveDepartment(@ModelAttribute("department") Department theDepartment) {
+    public String saveDepartment(@ModelAttribute("department") Department theDepartment,
+                                 @Valid Department department,
+                                 BindingResult result, Model theModel)  {
+        if(result.hasErrors()) {
+            return "employees/add-departments";
+        }
+
         departmentService.save(theDepartment);
         return "redirect:/departments/list";
     }

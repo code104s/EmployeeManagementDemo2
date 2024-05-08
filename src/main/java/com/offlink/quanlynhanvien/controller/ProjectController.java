@@ -7,12 +7,14 @@ import com.offlink.quanlynhanvien.service.DepartmentService;
 import com.offlink.quanlynhanvien.service.EmployeeService;
 import com.offlink.quanlynhanvien.service.Project.ProjectService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.apache.catalina.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -69,12 +71,36 @@ public class ProjectController {
     }
 
     @PostMapping("/save")
-    public String saveProject(@ModelAttribute("project") Project theProject) {
+    public String saveProject(@ModelAttribute("project") Project theProject,
+                              @Valid Project project,
+                              BindingResult result,
+                              Model theModel) {
+
+        if(result.hasErrors()) {
+
+            // get department and manager
+            Department department = departmentService.findDepartmentById(theProject.getDepartment().getMaPB());
+            Employee manager = employeeService.findById(theProject.getManager().getId());
+
+            theProject.setDepartment(department);
+            theProject.setManager(manager);
+            // get list of department
+            List<Department> departments = departmentService.findAll();
+            List<Employee> managers = employeeService.findAll();
+            theModel.addAttribute("departments", departments);
+
+            // get manager
+            theModel.addAttribute("managers", managers);
+
+            return "employees/projects/add-projects";
+        }
+
         // Lấy thông tin về quản lý dự án từ request
 
         Employee manager = employeeService.findById(theProject.getManager().getId());
         theProject.setManager(manager);
         projectService.save(theProject);
+
         return "redirect:/projects/list";
     }
 

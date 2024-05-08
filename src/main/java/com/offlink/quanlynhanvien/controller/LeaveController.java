@@ -5,10 +5,12 @@ import com.offlink.quanlynhanvien.entity.Employee;
 import com.offlink.quanlynhanvien.entity.Leave;
 import com.offlink.quanlynhanvien.service.EmployeeService;
 import com.offlink.quanlynhanvien.service.Leave.LeaveService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -73,7 +75,15 @@ public class LeaveController {
 
     // save a leave
     @PostMapping("/save")
-    public String saveLeave(@ModelAttribute("leave") Leave theLeave) {
+    public String saveLeave(@ModelAttribute("leave") Leave theLeave,
+                            @Valid Leave leave,
+                            Model theModel,
+                            BindingResult result) {
+
+        if(result.hasErrors()) {
+            return "employees/leaves/add-leave";
+        }
+        
         leaveService.save(theLeave);
         return "redirect:/leaves/list";
     }

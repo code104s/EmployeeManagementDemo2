@@ -2,9 +2,11 @@ package com.offlink.quanlynhanvien.controller;
 
 import com.offlink.quanlynhanvien.entity.Position;
 import com.offlink.quanlynhanvien.service.PositionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,7 +48,14 @@ public class PositionController {
 
     //mapping save
     @RequestMapping("/save")
-    public String savePosition(@ModelAttribute("position") Position thePosition) {
+    public String savePosition(@ModelAttribute("position") Position thePosition,
+                               @Valid Position position,
+                               BindingResult result,
+                               Model theModel) {
+        if(result.hasErrors()) {
+            return "employees/add-positions";
+        }
+
         positionService.save(thePosition);
         return "redirect:/positions/list";
     }

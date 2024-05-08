@@ -36,11 +36,13 @@
             <label>Ngày bắt đầu</label>
             <input type="date" th:field="*{ngayBatDau}" class="form-control">
         </div>
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('ngayBatDau')}" th:errors="*{ngayBatDau}"></p>
 
         <div class="form-group">
             <label>Ngày kết thúc</label>
             <input type="date" th:field="*{ngayKetThuc}" class="form-control">
         </div>
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('ngayKetThuc')}" th:errors="*{ngayKetThuc}"></p>
 
         <div class="form-group">
             <label>Lý do</label>

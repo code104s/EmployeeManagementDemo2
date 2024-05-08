@@ -25,10 +25,13 @@
         Tên chức vụ
         <input type ="text" th:field = "*{tenCV}"
                class="form-control mb-4 w-50">
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('tenCV')}" th:errors="*{tenCV}"></p>
+
         Mô tả
         <textarea th:field = "*{moTa}"
                   class="form-control mb-4 w-50">
         </textarea>
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('moTa')}" th:errors="*{moTa}"></p>
 
 
         <button type = "submit" class="btn btn-info col-3">Lưu</button>

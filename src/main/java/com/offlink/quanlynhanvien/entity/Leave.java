@@ -2,6 +2,7 @@ package com.offlink.quanlynhanvien.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -18,9 +19,11 @@ public class Leave {
     @JoinColumn(name = "MaNV")
     private Employee employee;
 
+    @NotNull(message = "Ngày bắt đầu không được để trống")
     @Column(name = "Ngaybatdau")
     private LocalDate ngayBatDau;
 
+    @NotNull(message = "Ngày kết thúc không được để trống")
     @Column(name = "Ngayketthuc")
     private LocalDate ngayKetThuc;
 

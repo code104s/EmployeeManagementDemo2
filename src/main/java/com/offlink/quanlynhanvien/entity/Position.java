@@ -2,6 +2,8 @@ package com.offlink.quanlynhanvien.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -14,9 +16,13 @@ public class Position {
     @Column(name = "MaCV")
     private int maCv;
 
+    @NotNull(message = "Tên chức vụ không được để trống")
+    @Size(min=5, max=50, message = "Tên chức vụ phải từ 5 đến 50 ký tự")
     @Column(name = "TenCV")
     private String tenCV;
 
+    @NotNull(message = "Mô tả không được để trống")
+    @Size(min=5, max=50, message = "Mô tả phải từ 5 đến 50 ký tự")
     @Column(name="Mota")
     private String moTa;
 

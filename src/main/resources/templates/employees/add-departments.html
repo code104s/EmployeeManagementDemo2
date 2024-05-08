@@ -22,13 +22,17 @@
     <form action="#" th:action="@{/departments/save}"
           th:object="${department}" method="POST">
         <input type = "hidden" th:field = "*{maPB}">
-          Tên phòng ban
+
+        Tên phòng ban
         <input type ="text" th:field = "*{tenPB}"
                class="form-control mb-4 w-50">
-          Mô tả
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('tenPB')}" th:errors="*{tenPB}"></p>
+
+        Mô tả
         <textarea th:field = "*{moTa}"
                class="form-control mb-4 w-50">
         </textarea>
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('moTa')}" th:errors="*{moTa}"></p>
 
 
         <button type = "submit" class="btn btn-info col-3">Lưu</button>

@@ -18,7 +18,7 @@
         Họ và tên:
         <input type = "text" th:field = "*{hoTen}"
                class="form-control mb-4 w-25">
-        <p th:if="${#fields.hasErrors('hoTen')}" th:errors="*{hoTen}" class="error"></p>
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('hoTen')}" th:errors="*{hoTen}"></p>
 
         <!--<ul>
             <li th:each="error : ${#fields.errors('hoTen')}"
@@ -27,21 +27,30 @@
         Ngày sinh:
         <input type="text" th:field = "*{ngaySinh}"
                class="form-control mb-4 w-25">
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('ngaySinh')}" th:errors="*{ngaySinh}"></p>
+
         Giới tính:
         <select th:field="*{gioiTinh}" class="form-select mb-4 w-25">
             <option value="Nam">Nam</option>
             <option value="Nu">Nữ</option>
             <option value="Khac">Khác</option>
         </select>
+
         Số điện thoại:
         <input type="text" th:field="*{soDienThoai}"
                class="form-control mb-4 w-25">
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('soDienThoai')}" th:errors="*{soDienThoai}"></p>
+
         Email:
         <input type="text" th:field="*{email}"
                class="form-control mb-4 w-25">
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+
         Địa Chỉ:
         <input type="text" th:field="*{diaChi}"
                class="form-control mb-4 w-25" >
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('diaChi')}" th:errors="*{diaChi}"></p>
+
         Phòng ban:
         <select th:field ="*{department}" class="form-select mb-4 w-25">
             <option th:each="department : ${departments}"
@@ -49,6 +58,8 @@
                     th:text="${department.tenPB}">
             </option>
         </select>
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></p>
+
         Chức vụ:
         <select th:field="*{position}" class="form-select mb-4 w-25">
             <option th:each="position : ${positions}"
@@ -56,7 +67,7 @@
                     th:text="${position.tenCV}">
             </option>
         </select>
-
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></p>
 
         <button type = "submit" class="btn btn-info col-3">Lưu</button>
     </form>
